@@ -1,0 +1,7 @@
+.repo-fetch-input {
+    margin-bottom: 40px;
+}
+
+.repo-fetch-input .form-control + .error {
+    margin-top: 8px;
+}
