@@ -22,11 +22,18 @@ async function api(repoUrl: string) {
               edges {
                 node {
                   id
-                  closed
                   stateReason
                   title
                   publishedAt
                   number
+                  comments(first: 1) {
+                    edges {
+                      node {
+                        id
+                      }
+                    }
+                  }
+                  createdAt
                   author {
                     login
                   }
@@ -39,19 +46,25 @@ async function api(repoUrl: string) {
       repo,
     });
 
-    const mappedData = apiMapper(data);
+    console.log(data);
 
-    return mappedData;
+    const mappedData = await apiMapper(data);
+
+    return {
+      data: mappedData,
+      error: false,
+      repoName: `${owner}/${repo}`,
+    };
   } catch (err) {
     if (err instanceof GraphqlResponseError) {
       if (process.env.NODE_ENV === 'development') {
         console.log('Request failed:', err.request);
         console.log(err.message);
       }
-      return { error: { message: err.message } };
+      return { data: null, error: { message: err.message } };
     } else {
       const otherError = err as Error;
-      return { error: { message: otherError.message } };
+      return { data: null, error: { message: otherError.message } };
     }
   }
 }

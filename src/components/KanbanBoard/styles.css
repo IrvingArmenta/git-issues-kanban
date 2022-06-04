@@ -1,3 +1,14 @@
+
+
+
+.react-kanban-wrap {
+    flex: 1;
+    background-color: #eee;
+    margin-bottom: 30px;
+}
+
+
+/** react-kanban override */
 .react-kanban-board {
     padding: 0;
 }
@@ -9,4 +20,17 @@
 
 .react-kanban-column {
     flex: 1;
+}
+
+.react-kanban-column div[data-rbd-draggable-context-id] > div {
+    width: 100%;
+}
+
+.react-kanban-card {
+    max-width: none;
+    min-width: none;
+}
+
+.react-kanban-column-header {
+    font-size: 1.5rem;
 }

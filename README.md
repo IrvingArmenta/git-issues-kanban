@@ -1,3 +1,11 @@
+
+# NOTES 
+- TODO (pending work)
+  - Persistent data (local storage data)
+  - Proper styling for cards (custom components)
+  - Proper error handling and URL check
+Worked in this 8 hours.
+---
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

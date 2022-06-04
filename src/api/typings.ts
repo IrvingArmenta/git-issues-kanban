@@ -23,11 +23,14 @@ export interface EdgesEntity {
 export interface Node {
   id: string;
   closed: boolean;
-  stateReason?: null;
+  stateReason?: 'COMPLETED' | 'NOT_PLANNED' | null;
   title: string;
-  publishedAt: string;
+  createdAt: string;
   number: number;
   author: Author;
+  comments: {
+    edges: string[];
+  };
 }
 
 export interface Author {

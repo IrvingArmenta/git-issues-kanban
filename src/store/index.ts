@@ -1,5 +1,4 @@
-import { createContext, useContext } from 'react';
-import type { ApiQueryProps } from '../api/typings';
+import React, { createContext, useContext } from 'react';
 import type { Nullable } from '../utils/types';
 import type { ColumnsEntity, KanbanBoardData } from './typings';
 
@@ -22,13 +21,31 @@ export const columnsInitData: ColumnsEntity[] = [
 ];
 
 export const initValue = {
-  apiQueryProps: null,
-  issuesData: { board: { columns: columnsInitData }, issuesExist: false },
+  currentRepoName: null,
+  issuesData: { board: { columns: columnsInitData } },
+  isFetching: false,
+  actions: {
+    setIsFetching: () => {
+      return;
+    },
+    setKanbanData: () => {
+      return;
+    },
+    setRepoName: () => {
+      return;
+    },
+  },
 };
 
 export const AppContext = createContext<{
-  apiQueryProps: Nullable<ApiQueryProps>;
-  issuesData: { board: KanbanBoardData; issuesExist: boolean };
+  currentRepoName: Nullable<string>;
+  issuesData: { board: KanbanBoardData };
+  isFetching: Nullable<boolean>;
+  actions: {
+    setIsFetching: React.Dispatch<React.SetStateAction<Nullable<boolean>>>;
+    setKanbanData: React.Dispatch<React.SetStateAction<KanbanBoardData>>;
+    setRepoName: React.Dispatch<React.SetStateAction<Nullable<string>>>;
+  };
 }>(initValue);
 
 export const useStore = () => useContext(AppContext);

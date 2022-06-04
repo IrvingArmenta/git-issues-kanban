@@ -9,7 +9,7 @@ export interface ColumnsEntity {
 }
 
 export interface CardsEntity {
-  id: number;
+  id: string;
   title: string;
   description: string;
 }
