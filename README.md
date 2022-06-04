@@ -5,6 +5,9 @@
   - Proper styling for cards (custom components)
   - Proper error handling and URL check
 Worked in this 8 hours.
+
+### Vercel Deployment URL: https://git-issues-kanban.vercel.app/
+
 ---
 # Getting Started with Create React App
 
