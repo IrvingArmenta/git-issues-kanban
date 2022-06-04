@@ -28,12 +28,12 @@ const RepoFetchInput: FC = () => {
   const handleRepositoryFetch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setInputError('');
-    actions.setIsFetching(true);
 
     if (
       inputValue?.trim().length &&
       inputValue?.includes('https://github.com')
     ) {
+      actions.setIsFetching(true);
       setRepoUrl(inputValue);
     } else {
       setInputError('Make sure the URL is a valid repository URL from github');

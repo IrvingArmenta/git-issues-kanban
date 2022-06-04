@@ -1,10 +1,14 @@
-
-
-
 .react-kanban-wrap {
     flex: 1;
     background-color: #eee;
     margin-bottom: 30px;
+}
+
+.spinner-wrap {
+    min-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
