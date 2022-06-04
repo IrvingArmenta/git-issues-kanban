@@ -1,0 +1,12 @@
+.react-kanban-board {
+    padding: 0;
+}
+
+.react-kanban-board > div {
+    width: 100%;
+    display: flex;
+}
+
+.react-kanban-column {
+    flex: 1;
+}

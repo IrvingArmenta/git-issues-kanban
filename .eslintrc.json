@@ -30,7 +30,8 @@
     "rules": {
         "prettier/prettier": ["error", {
             "singleQuote": true,
-            "traillingComma": "never"
+            "traillingComma": "off",
+            "endOfLine": "auto"
         }]
     }
 }
