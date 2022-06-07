@@ -1,7 +1,12 @@
 .react-kanban-wrap {
     flex: 1;
     background-color: #eee;
-    margin-bottom: 30px;
+}
+
+.react-kanban-section {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1;
 }
 
 .spinner-wrap {

@@ -24,16 +24,14 @@ export const initValue = {
   currentRepoName: null,
   issuesData: { board: { columns: columnsInitData } },
   isFetching: false,
-  actions: {
-    setIsFetching: () => {
-      return;
-    },
-    setKanbanData: () => {
-      return;
-    },
-    setRepoName: () => {
-      return;
-    },
+  setIsFetching: () => {
+    return;
+  },
+  setKanbanData: () => {
+    return;
+  },
+  setRepoName: () => {
+    return;
   },
 };
 
@@ -41,11 +39,11 @@ export const AppContext = createContext<{
   currentRepoName: Nullable<string>;
   issuesData: { board: KanbanBoardData };
   isFetching: Nullable<boolean>;
-  actions: {
-    setIsFetching: React.Dispatch<React.SetStateAction<Nullable<boolean>>>;
-    setKanbanData: React.Dispatch<React.SetStateAction<KanbanBoardData>>;
-    setRepoName: React.Dispatch<React.SetStateAction<Nullable<string>>>;
-  };
+  setIsFetching: React.Dispatch<React.SetStateAction<Nullable<boolean>>>;
+  setKanbanData: React.Dispatch<
+    React.SetStateAction<{ board: KanbanBoardData }>
+  >;
+  setRepoName: React.Dispatch<React.SetStateAction<Nullable<string>>>;
 }>(initValue);
 
 export const useStore = () => useContext(AppContext);

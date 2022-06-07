@@ -1,5 +1,6 @@
-import React, { FC, useState } from 'react';
-import useSwr from 'swr';
+import React, { FC, memo, useState } from 'react';
+import { useSWRConfig } from 'swr';
+import useSWRImmutable from 'swr/immutable';
 import api from '../../api';
 import { useUpdateEffect } from '../../hooks';
 import { initValue, useStore } from '../../store';
@@ -9,41 +10,46 @@ import ErrorBoundary from '../ErrorBoundary';
 import './styles.css';
 
 const RepoFetchInput: FC = () => {
-  const { actions } = useStore();
+  const { setIsFetching, setRepoName, setKanbanData } = useStore();
   const [inputValue, setInputValue] = useState<string>();
   const [repoUrl, setRepoUrl] = useState<string>();
   const [inputError, setInputError] = useState<string>();
-  const { data: columnsData, error } = useSwr(repoUrl ? repoUrl : null, api);
+  const { data: columnsData } = useSWRImmutable(repoUrl ? repoUrl : null, api);
+  const { cache } = useSWRConfig();
 
-  const handleInputEvent = (e: React.ChangeEvent<HTMLInputElement>) => {
-    actions.setIsFetching(null);
-    actions.setRepoName(null);
-    actions.setKanbanData(initValue.issuesData.board);
-    setInputError('');
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRepoName(null);
+    setIsFetching(null);
     setRepoUrl(undefined);
+    setKanbanData((prev) => ({
+      ...prev,
+      board: initValue.issuesData.board,
+    }));
 
     setInputValue(e.target.value);
   };
 
   const handleRepositoryFetch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setInputError('');
 
-    if (
-      inputValue?.trim().length &&
-      inputValue?.includes('https://github.com')
-    ) {
-      actions.setIsFetching(true);
+    if (inputValue?.trim().length && inputValue !== repoUrl) {
+      if (!inputValue.includes('https://github.com')) {
+        setInputError(
+          'Please make sure the url is a valid github repository URL'
+        );
+
+        return;
+      }
+
+      setIsFetching(true);
       setRepoUrl(inputValue);
-    } else {
-      setInputError('Make sure the URL is a valid repository URL from github');
     }
   };
 
   useUpdateEffect(() => {
     if (columnsData && !columnsData.error) {
-      actions.setKanbanData(columnsData.data);
-      actions.setRepoName(columnsData.repoName);
+      setKanbanData({ board: columnsData.data });
+      setRepoName(columnsData.repoName);
     }
 
     if (
@@ -54,7 +60,8 @@ const RepoFetchInput: FC = () => {
       setInputError(columnsData.error.message);
     }
 
-    actions.setIsFetching(false);
+    setIsFetching(false);
+    cache.delete(repoUrl);
   }, [columnsData]);
 
   return (
@@ -74,8 +81,9 @@ const RepoFetchInput: FC = () => {
                 className="form-control"
                 id="repositoryFetchInput"
                 placeholder="Repository Url"
-                onChange={(e) => handleInputEvent(e)}
+                onChange={(e) => handleInput(e)}
                 required={true}
+                autoComplete="url"
               />
               {inputError && (
                 <div className="error text-danger">{inputError}</div>
@@ -96,4 +104,4 @@ const RepoFetchInput: FC = () => {
   );
 };
 
-export default RepoFetchInput;
+export default memo(RepoFetchInput);

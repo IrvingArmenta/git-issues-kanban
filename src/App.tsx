@@ -4,12 +4,12 @@ import { RepoFetchInput, KanbanBoard } from './components';
 // app styles
 import './css/app.css';
 import { AppContext, initValue } from './store';
-import { KanbanBoardData } from './store/typings';
-import { Nullable } from './utils/types';
+import type { KanbanBoardData } from './store/typings';
+import type { Nullable } from './utils/types';
 
 function App() {
-  const [kanbanData, setKanbanData] = useState<KanbanBoardData>(
-    initValue.issuesData.board
+  const [kanbanData, setKanbanData] = useState<{ board: KanbanBoardData }>(
+    initValue.issuesData
   );
   const [isFetching, setIsFetching] = useState<Nullable<boolean>>(null);
   const [repoName, setRepoName] = useState<Nullable<string>>(null);
@@ -19,9 +19,11 @@ function App() {
       <AppContext.Provider
         value={{
           currentRepoName: repoName,
-          issuesData: { board: kanbanData },
+          issuesData: kanbanData,
           isFetching,
-          actions: { setIsFetching, setKanbanData, setRepoName },
+          setIsFetching,
+          setKanbanData,
+          setRepoName,
         }}
       >
         <RepoFetchInput />
