@@ -1,6 +1,6 @@
 import { graphql, GraphqlResponseError } from '@octokit/graphql';
-import apiMapper from './mapper';
-import { GitIssues } from './typings';
+import apiMapper from './utils/mapper';
+import type { GitIssues } from './typings';
 
 const graphqlWithAuth = graphql.defaults({
   headers: {
@@ -46,9 +46,8 @@ async function api(repoUrl: string) {
       repo,
     });
 
-    console.log(data);
-
-    const mappedData = await apiMapper(data);
+    const repoName = `${owner}/${repo}`;
+    const mappedData = await apiMapper(data, repoName);
 
     return {
       data: mappedData,

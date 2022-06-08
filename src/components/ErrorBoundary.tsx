@@ -15,7 +15,7 @@ class ErrorBoundary extends React.Component<
 
   componentDidCatch(error: any, errorInfo: any) {
     if (process.env.NODE_ENV === 'development') {
-      console.log(error, errorInfo);
+      console.error(error, errorInfo);
     }
   }
 
